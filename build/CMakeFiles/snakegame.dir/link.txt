@@ -1,0 +1,1 @@
+/usr/bin/c++.exe -Wl,--enable-auto-import CMakeFiles/snakegame.dir/include/screen.cpp.o CMakeFiles/snakegame.dir/src/main.cpp.o -o snakegame.exe -Wl,--out-implib,libsnakegame.dll.a -Wl,--major-image-version,0,--minor-image-version,0 

@@ -1,12 +1,13 @@
 #include "../include/main.h"
 
 int main(){
+    int choice;
     cout << "==================================== WELCOME TO SNAKE GAME ====================================\n";
-    cout << "1. Play\n2.Exit";
+    cout << "1. Play\n2.Exit\n";
     cin >> choice;
     switch(choice) {
         case 1:
-            display(2);
+            InitDisplay();
             break;
         case 2:
             cout << "See you";
