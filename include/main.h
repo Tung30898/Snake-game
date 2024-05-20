@@ -5,6 +5,7 @@
 #include<bits/stdc++.h>
 #include<windows.h>
 #include"screen.h"
+#include<conio.h>
 
 using namespace std;
 

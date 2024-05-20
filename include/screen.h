@@ -10,5 +10,6 @@ using namespace std;
 
 // for function
 void InitDisplay();
-
+void GameDisplay(int direct);
+void CalPosSnake(int direct);
 #endif
