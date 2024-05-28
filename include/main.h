@@ -5,12 +5,12 @@
 #include<bits/stdc++.h>
 #include<windows.h>
 #include"screen.h"
-#include<conio.h>
+// #include<conio.h>
+
 
 using namespace std;
 
 // declare functions
 int main(void);
-// declare variables
-int choice;
+
 #endif
