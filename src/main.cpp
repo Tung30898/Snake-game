@@ -2,14 +2,15 @@
 
 int main(){
     int choice=10;
-    Screen* snake;
+    Screen snake;
     cout << "==================================== WELCOME TO SNAKE GAME ====================================\n";
     cout << "1. Play\n2.Exit\n";
     cin >> choice;
     switch(choice) {
         case 1:
-            snake->InitDisplay();
-            snake->DetectDirect();
+            cout << "Play game";
+            snake.InitDisplay();
+            snake.DetectDirect();
             break;
         case 2:
             cout << "See you";
@@ -17,6 +18,5 @@ int main(){
         default:
             cout << "don't suitalbe";
     }
-    delete snake;
     return 0;
 }
