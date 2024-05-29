@@ -53,7 +53,7 @@ public:
     void GameDisplay(const int direct);
     void CalPosSnake(const int direct);
     void DetectDirect();
-    void CreatSpray();
+    void CreatSprey();
 };
 
 

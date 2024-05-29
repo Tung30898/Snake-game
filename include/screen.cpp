@@ -2,14 +2,15 @@
 
 #define UNUSED(x) (void)(x)
 
-void CreatSpray(){
-    mPreyX = rand() % maxX + 1;
-    mPreyY = rand() % maxY + 1;
+void Screen::CreatSprey(){
+    mPreyX = rand() % (maxX-1) + 1;
+    mPreyY = rand() % (maxY-1) + 1;
     mMark[mPreyX][mPreyY] = 1;
 }
 
 void Screen::InitDisplay(){
-    this->CalPosSnake(10);
+    CreatSprey();
+    CalPosSnake(10);
     for(int i = minX; i <=maxX; ++i) {
         for(int j = minY; j<= maxY; ++j) {
             // display boundary
@@ -34,9 +35,10 @@ void Screen::InitDisplay(){
 }
 
 void Screen::GameDisplay(const int direct){
-    // system("cls");
+    system("cls");
     // clrscr();
-    CalPosSnake(direct);
+    if(4 != direct)
+        CalPosSnake(direct);
     for(int i = minX; i <=maxX; ++i) {
         for(int j = minY; j<= maxY; ++j) {
             // display boundary
@@ -49,8 +51,11 @@ void Screen::GameDisplay(const int direct){
                 cout << "|";
                 continue;
             }
-
             if(1 == mMark[i][j]) {
+                if(4 == direct && i == mPosition[0].first && j == mPosition[0].second) {
+                    cout << "X ";
+                    continue;
+                }
                 cout << "o ";
                 continue;
             }
@@ -62,7 +67,7 @@ void Screen::GameDisplay(const int direct){
 }
 
 void Screen::CalPosSnake(const int direct){   // 1:^ 2:< 3:v 4:>
-    cout << direct << "\n";
+    cout << direct << " " << mPreyX<< " "<< mPreyY<<"\n";
     int n = mPosition.size()-1;
     pair<int,int> tail = mPosition[n];
     if(10 == direct) {   
@@ -84,28 +89,25 @@ void Screen::CalPosSnake(const int direct){   // 1:^ 2:< 3:v 4:>
     } else {                                            // neu khong thi di theo huong di moi
         mPosition[0].first += rowD[direct];
         mPosition[0].second += colD[direct];
-    }
-    // check neu snake gap tuong hoac gap chinh no thi thua
-    if(mPosition[0].first > maxX || mPosition[0].second < minX  
-    || mPosition[1].first > maxY || mPosition[1].second < minY) {
-        mLose = true;
-    } else if(1 == mMark[mPosition[0].first][mPosition[0].second]) {
-        mLose = true;
-    } else {
-        // Do nothing
+        oldDir = direct;
     }
     // neu no gap moi thi se tang do dai snake
     if(mPosition[0].first == mPreyX && mPreyY == mPosition[0].second) {
         mPosition.push_back(tail);
-        mMark[tail.first][tail.second] = 1;
-        
+        mMark[tail.first][tail.second] = 1;                // tang do dai snake
+        mMark[mPreyX][mPreyY] = 0;                         // xoa vi tri moi di
+        CreatSprey();                                      // tao sprey moi
     }
-    oldDir = direct;
-    mMark[mPosition[0].first][mPosition[0].second] = 1;
-    for(auto i:mPosition) {
-        cout << i.first << " " << i.second << "| ";
+    // check neu snake gap tuong hoac gap chinh no thi thua
+    if(mPosition[0].first >= maxX || mPosition[0].second <= minX  
+    || mPosition[0].first >= maxY || mPosition[0].second <= minY) { // neu gap tuong thi thua
+        mLose = true;
+    } else if(1 == mMark[mPosition[0].first][mPosition[0].second]) { // neu dau snake gap chinh no thi thua 
+        mLose = true;
+    } else {
+        // Do nothing
     }
-    cout <<  "\n";
+    mMark[mPosition[0].first][mPosition[0].second] = 1; // tinh toa do dau snake va danh dau lai de hien thi dau snake
     return;
 }
 
@@ -134,6 +136,7 @@ void Screen::DetectDirect() {
         }
         GameDisplay(dir);
         if(mLose) {
+            GameDisplay(4);
             cout << "\n You Lose";
         }
     }
