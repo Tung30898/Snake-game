@@ -2,9 +2,11 @@
 
 #define UNUSED(x) (void)(x)
 
-// Screen::Screen() {
-    
-// }
+void CreatSpray(){
+    mPreyX = rand() % maxX + 1;
+    mPreyY = rand() % maxY + 1;
+    mMark[mPreyX][mPreyY] = 1;
+}
 
 void Screen::InitDisplay(){
     this->CalPosSnake(10);
@@ -96,6 +98,7 @@ void Screen::CalPosSnake(const int direct){   // 1:^ 2:< 3:v 4:>
     if(mPosition[0].first == mPreyX && mPreyY == mPosition[0].second) {
         mPosition.push_back(tail);
         mMark[tail.first][tail.second] = 1;
+        
     }
     oldDir = direct;
     mMark[mPosition[0].first][mPosition[0].second] = 1;
