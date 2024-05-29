@@ -12,5 +12,9 @@ using namespace std;
 
 // declare functions
 int main(void);
-
+void PrintWelcome(){
+    system("cls");
+    cout << "==================================== WELCOME TO SNAKE GAME ====================================\n";
+    cout << "1. Play\n2. Difficult Level\n3. Exit\n";
+};
 #endif

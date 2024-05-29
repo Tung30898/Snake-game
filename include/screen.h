@@ -21,18 +21,21 @@ public:
     vector<int> rowD;
     vector<int> colD;
     int oldDir;
+    int oldRow;
     int maxX;
     int maxY;
     int minX;
     int minY;
     int mPreyX;
     int mPreyY;
+    unsigned int difficult;
     bool mLose;
     // method
     Screen(){
         cout << "constructor of screen";
         //kich thuoc khung
         oldDir = 0;
+        oldRow = 5;
         maxX = 30;
         maxY = 50;
         minX = 0;
@@ -40,6 +43,8 @@ public:
         // toa do con moi
         mPreyX = 0;
         mPreyY = 0;
+        // do kho cua game - toc do cua snake
+        difficult = 250;
         // neu thua thi set len 1;
         mLose = false;
         mPosition = vector<pair<int,int>> {{15,24},{15,25},{15,26}};     // toa do cua snake
@@ -54,6 +59,7 @@ public:
     void CalPosSnake(const int direct);
     void DetectDirect();
     void CreatSprey();
+    void SelectDificult();
 };
 
 

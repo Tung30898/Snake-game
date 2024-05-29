@@ -3,8 +3,16 @@
 #define UNUSED(x) (void)(x)
 
 void Screen::CreatSprey(){
-    mPreyX = rand() % (maxX-1) + 1;
-    mPreyY = rand() % (maxY-1) + 1;
+    bool accept = true;
+    do{
+        accept = false;
+        mPreyX = rand() % (maxX-1) + 1;
+        mPreyY = rand() % (maxY-1) + 1;
+        for(auto i:mPosition) {
+            if(mPreyX == i.first && mPreyY == i.second)
+                accept = true;
+        }
+    }while(accept);
     mMark[mPreyX][mPreyY] = 1;
 }
 
@@ -67,7 +75,6 @@ void Screen::GameDisplay(const int direct){
 }
 
 void Screen::CalPosSnake(const int direct){   // 1:^ 2:< 3:v 4:>
-    cout << direct << " " << mPreyX<< " "<< mPreyY<<"\n";
     int n = mPosition.size()-1;
     pair<int,int> tail = mPosition[n];
     if(10 == direct) {   
@@ -113,31 +120,68 @@ void Screen::CalPosSnake(const int direct){   // 1:^ 2:< 3:v 4:>
 
 void Screen::DetectDirect() {
     while(!mLose){
-        cout << "Goto detect Direct:";
-        int a ;
-        int dir = 0;
-        a = getch();
-        cout << a << " ";
-        switch(a){
-            case 56:
-                dir = 0;
-                break;
-            case 52:
-                dir = 1;
-                break;
-            case 50:
-                dir = 2;
-                break;
-            case 54:
-                dir = 3;
-                break;
-            case 3:
-                return ;
+        int dir = 5;
+        if (_kbhit()) {
+            switch(getch()){
+                case 56:
+                    dir = 0;
+                    break;
+                case 52:
+                    dir = 1;
+                    break;
+                case 50:
+                    dir = 2;
+                    break;
+                case 54:
+                    dir = 3;
+                    break;
+                case 3:
+                    return ;
+            }
+            oldRow = dir;
+        } else {
+            dir = oldRow;
         }
-        GameDisplay(dir);
+        if(dir != 5)
+            GameDisplay(dir);
         if(mLose) {
             GameDisplay(4);
             cout << "\n You Lose";
+            Sleep(1000);
+        }
+        Sleep(difficult);
+    }
+}
+
+void Screen::SelectDificult(){
+    bool out = true;
+    cout << "<   " << difficult << "   >\n";
+    while(out){
+        if (_kbhit()) {
+            cout << "\x1b[1A"; // Move cursor up one
+            cout << "\x1b[2K"; // Delete the entire line
+            cout << "<   " << difficult << "   >\n";
+            switch(getch()){
+                case 52:
+                    difficult -= 10;
+                    break;
+                case 54:
+                    difficult += 10;
+                    break;
+                case 53:
+                    out = false;
+                    break;
+            }
+        }
+        if(difficult <= 50){
+            difficult = 50;
+            continue;
+        }
+        if(difficult >= 500) {
+            difficult = 500;
+            continue;
         }
     }
+    system("cls");
+    return;
 }
